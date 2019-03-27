@@ -1,0 +1,747 @@
+
+LAB 01
+========
+
+student@eim-lab:~$ cd Laborator01
+student@eim-lab:~/Laborator01$ git remote add Laborator01_perfectstudent https://github.com/perfectstudent/Laborator01
+student@eim-lab:~/Laborator01$ git push Laborator01_perfectstudent master
+
+AlphaAnimation fadeEffect = new AlphaAnimation(1.0f, 0.0f);
+fadeEffect.setDuration(TRANSPARENCY_EFFECT_DURATION);
+fadeEffect.setFillAfter(true);
+greetingTextView.setAnimation(fadeEffect);
+
+
+LAB 02
+===========
+
+public class LifecycleMonitorActivity extends Activity {
+ 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    // ...
+  }
+ 
+  @Override
+  protected void onStart() {
+    super.onStart();
+    // ...
+  }
+ 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    // ...
+  }
+ 
+  @Override
+  protected void onPause() {
+    super.onPause();
+    // ...
+  }
+ 
+  @Override
+  protected void onStop() {
+    super.onStop();
+    // ...
+  }
+ 
+  @Override
+  protected void onDestroy() {
+    super.onDestroy();
+    // ...
+  }
+ 
+  @Override
+  protected void onRestart() {
+    super.onRestart();
+    // ...
+  }
+ 
+  // metode folosite pentru salvarea si restaurarea starii    
+ 
+  @Override
+  protected void onSaveInstanceState(Bundle savedInstanceState) {
+    // apelarea metodei din activitatea parinte este recomandata, dar nu obligatorie
+    super.onSaveInstanceState(savedInstanceState);
+    // ...
+  }
+ 
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    // apelarea metodei din activitatea parinte este recomandata, dar nu obligatorie
+    super.onRestoreInstanceState(savedInstanceState);
+    // ...
+  }
+ 
+}
+
+private class ButtonClickListener implements Button.OnClickListener {
+ 
+  @Override
+  @SuppressWarnings("all")
+  public void onClick(View view) {
+    EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+    EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+    if (getResources().getString(R.string.ok_button_content).equals(((Button)view).getText().toString())) {
+ 
+      LayoutInflater layoutInflater = (LayoutInflater)getBaseContext().getSystemService(LAYOUT_INFLATER_SERVICE);  		
+ 
+      if (Utilities.allowAccess(getApplicationContext(), usernameEditText.getText().toString(), passwordEditText.getText().toString())) {
+        View popupContent = layoutInflater.inflate(R.layout.popup_window_authentication_success, null);  
+        final PopupWindow popupWindow = new PopupWindow(popupContent, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+ 
+        Button dismissButton = (Button)popupContent.findViewById(R.id.dismiss_button);
+        dismissButton.setOnClickListener(new Button.OnClickListener(){	
+          @Override
+          public void onClick(View view) {
+            popupWindow.dismiss();
+          }
+        });
+	popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);	
+      } else {
+        View popupContent = layoutInflater.inflate(R.layout.popup_window_authentication_fail, null);  
+        final PopupWindow popupWindow = new PopupWindow(popupContent, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT);  
+ 
+        Button dismissButton = (Button)popupContent.findViewById(R.id.dismiss_button);
+        dismissButton.setOnClickListener(new Button.OnClickListener(){	
+          @Override
+          public void onClick(View view) {
+            popupWindow.dismiss();
+          }
+        });
+        popupWindow.showAtLocation(view, Gravity.CENTER, 0, 0);					
+      }
+    }
+ 
+    if (getResources().getString(R.string.cancel_button_content).equals(((Button)view).getText().toString())) {
+      usernameEditText.setText(getResources().getString(R.string.empty));
+      passwordEditText.setText(getResources().getString(R.string.empty));
+    }
+  }
+}
+
+
+android:saveEnabled=“false”.
+
+ if ((savedInstanceState != null)) {
+            Log.d(Constants.TAG, "onCreate() method was invoked with a previous state");
+            if (savedInstanceState.containsKey(Constants.USERNAME_EDIT_TEXT)) {
+                EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+                usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+            }
+            if (savedInstanceState.containsKey(Constants.PASSWORD_EDIT_TEXT)) {
+                EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+                passwordEditText.setText(savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT));
+            }
+            if (savedInstanceState.containsKey(Constants.REMEMBER_ME_CHECKBOX)) {
+                CheckBox rememberMeCheckbox = (CheckBox)findViewById(R.id.remember_me_checkbox);
+                rememberMeCheckbox.setChecked(savedInstanceState.getBoolean(Constants.REMEMBER_ME_CHECKBOX));
+            }
+        } else {
+            Log.d(Constants.TAG, "onCreate() method was invoked without a previous state");
+        }
+
+        @Override
+    protected void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+        EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+        CheckBox check = (CheckBox)findViewById(R.id.remember_me_checkbox);
+        if(check.isChecked()) {
+            savedInstanceState.putString(Constants.USERNAME_EDIT_TEXT, usernameEditText.getText().toString());
+            savedInstanceState.putString(Constants.PASSWORD_EDIT_TEXT, passwordEditText.getText().toString());
+            savedInstanceState.putBoolean(Constants.REMEMBER_ME_CHECKBOX, check.isChecked());
+
+        }
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        if (savedInstanceState.containsKey(Constants.USERNAME_EDIT_TEXT)) {
+            EditText usernameEditText = (EditText)findViewById(R.id.username_edit_text);
+            usernameEditText.setText(savedInstanceState.getString(Constants.USERNAME_EDIT_TEXT));
+        }
+        if (savedInstanceState.containsKey(Constants.PASSWORD_EDIT_TEXT)) {
+            EditText passwordEditText = (EditText)findViewById(R.id.password_edit_text);
+            passwordEditText.setText(savedInstanceState.getString(Constants.PASSWORD_EDIT_TEXT));
+        }
+        if (savedInstanceState.containsKey(Constants.REMEMBER_ME_CHECKBOX)) {
+            CheckBox rememberMeCheckBox = (CheckBox) findViewById(R.id.remember_me_checkbox);
+            rememberMeCheckBox.setChecked(savedInstanceState.getBoolean(Constants.REMEMBER_ME_CHECKBOX));
+        }
+    }
+
+
+    LAB 03
+    =========
+
+
+    <?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".PhoneDialerActivity">
+
+    <EditText
+        android:id="@+id/phone_number_edit_text"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="phone"
+        android:enabled="false"
+        android:gravity="center"/>
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:rowCount="8"
+        android:columnCount="3"
+        android:layout_gravity="center">
+
+        <ImageButton
+            android:id="@+id/backspace_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/backspace"
+            android:background="@null"
+            android:layout_row="0"
+            android:layout_column="2"
+            android:layout_gravity="center"/>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="1"
+            android:layout_column="0"/>
+
+        <Button
+            android:id="@+id/number_1_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="0"
+            android:text="@string/number_1"/>
+
+        <Button
+            android:id="@+id/number_2_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="1"
+            android:text="@string/number_2"/>
+
+        <Button
+            android:id="@+id/number_3_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="2"
+            android:layout_column="2"
+            android:text="@string/number_3"/>
+
+        <Button
+            android:id="@+id/number_4_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="0"
+            android:text="@string/number_4"/>
+
+        <Button
+            android:id="@+id/number_5_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="1"
+            android:text="@string/number_5"/>
+
+        <Button
+            android:id="@+id/number_6_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="3"
+            android:layout_column="2"
+            android:text="@string/number_6"/>
+
+        <Button
+            android:id="@+id/number_7_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="0"
+            android:text="@string/number_7"/>
+
+        <Button
+            android:id="@+id/number_8_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="1"
+            android:text="@string/number_8"/>
+
+        <Button
+            android:id="@+id/number_9_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="4"
+            android:layout_column="2"
+            android:text="@string/number_9"/>
+
+        <Button
+            android:id="@+id/star_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="0"
+            android:text="@string/star"/>
+
+        <Button
+            android:id="@+id/number_0_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="1"
+            android:text="@string/number_0"/>
+
+        <Button
+            android:id="@+id/pound_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_row="5"
+            android:layout_column="2"
+            android:text="@string/pound"/>
+
+        <Space
+            android:layout_width="10dp"
+            android:layout_height="10dp"
+            android:layout_row="6"
+            android:layout_column="0"/>
+
+        <ImageButton
+            android:id="@+id/call_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/call"
+            android:layout_row="7"
+            android:layout_column="0"
+            android:layout_gravity="center"/>
+
+        <ImageButton
+            android:id="@+id/hangup_image_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/hangup"
+            android:layout_row="7"
+            android:layout_column="2"
+            android:layout_gravity="center"/>
+
+    </GridLayout>
+
+</LinearLayout>
+
+LAB 4 -5 NU
+
+COLOCVIU
+=========
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  xmlns:tools="http://schemas.android.com/tools"
+  android:layout_width="match_parent"
+  android:layout_height="match_parent"
+  android:paddingBottom="@dimen/activity_vertical_margin"
+  android:paddingLeft="@dimen/activity_horizontal_margin"
+  android:paddingRight="@dimen/activity_horizontal_margin"
+  android:paddingTop="@dimen/activity_vertical_margin"
+  android:orientation="vertical"
+  tools:context="ro.pub.cs.systems.eim.practicaltest01.PracticalTest01MainActivity" >
+ 
+  <Button
+    android:id="@+id/navigate_to_secondary_activity_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/navigate_to_secondary_activity"/>
+ 
+    <GridLayout
+      android:layout_width="match_parent"
+      android:layout_height="wrap_content"
+      android:rowCount="2"
+      android:columnCount="2">
+ 
+      <EditText
+        android:id="@+id/left_edit_text"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:saveEnabled="false"
+	android:enabled="false"
+	android:inputType="number"
+	android:ems="6"
+	android:layout_row="0"
+	android:layout_column="0"
+	android:layout_gravity="center"
+	android:gravity="center"/>
+ 
+      <EditText
+	android:id="@+id/right_edit_text"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:saveEnabled="false"
+	android:enabled="false"
+	android:inputType="number"
+	android:ems="6"
+	android:layout_row="0"
+	android:layout_column="1"
+	android:layout_gravity="center"
+	android:gravity="center" />
+ 
+      <Button
+	android:id="@+id/left_button"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_row="1"
+	android:layout_column="0"
+	android:layout_gravity="center"
+	android:text="@string/press_me" />
+ 
+      <Button
+	android:id="@+id/right_button"
+	android:layout_width="wrap_content"
+	android:layout_height="wrap_content"
+	android:layout_row="1"
+	android:layout_column="1"
+	android:layout_gravity="center"
+	android:text="@string/press_me_too" />
+ 
+  </GridLayout>
+ 
+</LinearLayout>
+
+
+public class PracticalTest01MainActivity extends Activity {
+ 
+  private ButtonClickListener buttonClickListener = new ButtonClickListener();
+  private class ButtonClickListener implements View.OnClickListener {
+    @Override
+    public void onClick(View view) {
+      switch(view.getId()) {
+        case R.id.left_button:
+          int leftNumberOfClicks = Integer.parseInt(leftEditText.getText().toString());
+          leftNumberOfClicks++;
+          leftEditText.setText(String.valueOf(leftNumberOfClicks));
+          break;
+        case R.id.right_button:
+          int rightNumberOfClicks = Integer.parseInt(rightEditText.getText().toString());
+          rightNumberOfClicks++;
+          rightEditText.setText(String.valueOf(rightNumberOfClicks));
+          break;
+      }
+    }
+  }
+ 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+ 
+    // ...
+ 
+    leftButton.setOnClickListener(buttonClickListener);
+    rightButton.setOnClickListener(buttonClickListener);       
+  }
+
+  public class PracticalTest01MainActivity extends Activity {
+ 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+ 
+    // ...
+ 
+    if (savedInstanceState != null) {
+      if (savedInstanceState.containsKey("leftCount")) {
+        leftEditText.setText(savedInstanceState.getString("leftCount"));
+      } else {
+        leftEditText.setText(String.valueOf(0));
+      }
+      if (savedInstanceState.containsKey("rightCount")) {
+        rightEditText.setText(savedInstanceState.getString("rightCount"));
+      } else {
+        rightEditText.setText(String.valueOf(0));
+      }
+    } else {
+      leftEditText.setText(String.valueOf(0));
+      rightEditText.setText(String.valueOf(0));
+    }
+  }
+ 
+  @Override
+  protected void onSaveInstanceState(Bundle savedInstanceState) {
+    savedInstanceState.putString("leftCount", leftEditText.getText().toString());
+    savedInstanceState.putString("rightCount", rightEditText.getText().toString());
+  }
+ 
+  @Override
+  protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    if (savedInstanceState.containsKey("leftCount")) {
+      leftEditText.setText(savedInstanceState.getString("leftCount"));
+    } else {
+      leftEditText.setText(String.valueOf(0));
+    }
+    if (savedInstanceState.containsKey("rightCount")) {
+      rightEditText.setText(savedInstanceState.getString("rightCount"));
+    } else {
+      rightEditText.setText(String.valueOf(0));
+    }
+  }
+ 
+  // ...
+}  
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="ro.pub.cs.systems.eim.practicaltest01">
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+        <activity android:name=".view.PracticalTest01MainActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".view.PracticalTest01SecondaryActivity">
+            <intent-filter>
+                <action android:name="ro.pub.cs.systems.eim.practicaltest01.intent.action.PracticalTest01SecondaryActivity" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        <service
+            android:name=".service.PracticalTest01Service"
+            android:enabled="true"
+            android:exported="false" />
+    </application>
+
+</manifest>
+
+public class PracticalTest01SecondaryActivity extends Activity {
+ 
+  private TextView numberOfClicksTextView = null;
+  private Button okButton = null;
+  private Button cancelButton = null;
+ 
+  private ButtonClickListener buttonClickListener = new ButtonClickListener();
+  private class ButtonClickListener implements View.OnClickListener {
+    @Override
+    public void onClick(View view) {
+      switch(view.getId()) {
+        case R.id.ok_button:
+          setResult(RESULT_OK, null);
+          break;
+        case R.id.cancel_button:
+          setResult(RESULT_CANCELED, null);
+          break;
+      }
+      finish();
+    }
+  }
+ 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_practical_test01_secondary);
+ 
+    numberOfClicksTextView = (TextView)findViewById(R.id.number_of_clicks_text_view);
+    Intent intent = getIntent();
+    if (intent != null && intent.getExtras().containsKey("numberOfClicks")) {
+      int numberOfClicks = intent.getIntExtra("numberOfClicks", -1);
+      numberOfClicksTextView.setText(String.valueOf(numberOfClicks));
+    }
+ 
+    okButton = (Button)findViewById(R.id.ok_button);
+    okButton.setOnClickListener(buttonClickListener);
+    cancelButton = (Button)findViewById(R.id.cancel_button);
+    cancelButton.setOnClickListener(buttonClickListener);
+  }
+ 
+
+ switch(view.getId()) {
+        case R.id.navigate_to_secondary_activity_button:
+          Intent intent = new Intent(getApplicationContext(), PracticalTest01SecondaryActivity.class);
+	  int numberOfClicks = Integer.parseInt(leftEditText.getText().toString()) + 
+                               Integer.parseInt(rightEditText.getText().toString());
+          intent.putExtra("numberOfClicks", numberOfClicks);
+          startActivityForResult(intent, SECONDARY_ACTIVITY_REQUEST_CODE);
+          break;
+
+           @Override
+  protected void onActivityResult(int requestCode, int resultCode, Intent intent) {
+    if (requestCode == SECONDARY_ACTIVITY_REQUEST_CODE) {
+      Toast.makeText(this, "The activity returned with result " + resultCode, Toast.LENGTH_LONG).show();
+    }
+  }
+ 
+
+ import android.app.Service;
+import android.content.Intent;
+import android.os.IBinder;
+ 
+public class PracticalTest01Service extends Service {
+ 
+  private ProcessingThread processingThread = null;
+ 
+  @Override
+  public int onStartCommand(Intent intent, int flags, int startId) {
+    int firstNumber = intent.getIntExtra("firstNumber", -1);
+    int secondNumber = intent.getIntExtra("secondNumber", -1);
+    processingThread = new ProcessingThread(this, firstNumber, secondNumber);
+    processingThread.start();
+    return Service.START_REDELIVER_INTENT;
+  }
+ 
+  @Override
+  public IBinder onBind(Intent intent) {
+    return null;
+  }
+ 
+  @Override
+  public void onDestroy() {
+    processingThread.stopThread();
+  }
+ 
+}
+
+
+import java.util.Date;
+import java.util.Random;
+ 
+import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
+ 
+public class ProcessingThread extends Thread {
+ 
+  private Context context = null;
+  private boolean isRunning = true;
+ 
+  private Random random = new Random();
+ 
+  private double arithmeticMean;
+  private double geometricMean;
+ 
+  public ProcessingThread(Context context, int firstNumber, int secondNumber) {
+    this.context = context;
+ 
+    arithmeticMean = (firstNumber + secondNumber) / 2;
+    geometricMean = Math.sqrt(firstNumber * secondNumber);
+  }
+ 
+  @Override
+  public void run() {
+    Log.d("[ProcessingThread]", "Thread has started!");
+    while (isRunning) {
+      sendMessage();
+      sleep();
+    }
+    Log.d("[ProcessingThread]", "Thread has stopped!");
+  }
+ 
+  private void sendMessage() {
+    Intent intent = new Intent();
+    intent.setAction(Constants.actionTypes[random.nextInt(Constants.actionTypes.length)]);
+    intent.putExtra("message", new Date(System.currentTimeMillis()) + " " + arithmeticMean + " " + geometricMean);
+    context.sendBroadcast(intent);
+  }
+ 
+  private void sleep() {
+    try {
+      Thread.sleep(10000);
+    } catch (InterruptedException interruptedException) {
+      interruptedException.printStackTrace();
+    }
+  }
+ 
+  public void stopThread() {
+    isRunning = false;
+  }
+}
+
+
+private class ButtonClickListener implements View.OnClickListener {	
+  @Override
+  public void onClick(View view) {
+    int leftNumberOfClicks = Integer.parseInt(leftEditText.getText().toString());
+    int rightNumberOfClicks = Integer.parseInt(rightEditText.getText().toString());
+ 
+    // ...
+ 
+    if (leftNumberOfClicks + rightNumberOfClicks > Constants.NUMBER_OF_CLICKS_THRESHOLD
+        && serviceStatus == Constants.SERVICE_STOPPED) {
+      Intent intent = new Intent(getApplicationContext(), PracticalTest01Service.class);
+      intent.putExtra("firstNumber", leftNumberOfClicks);
+      intent.putExtra("secondNumber", rightNumberOfClicks);
+      getApplicationContext().startService(intent);
+      serviceStatus = Constants.SERVICE_STARTED;
+    }
+  }
+}
+
+
+@Override
+protected void onDestroy() {
+  Intent intent = new Intent(this, PracticalTest01Service.class);
+  stopService(intent);
+  super.onDestroy();
+}
+
+
+private MessageBroadcastReceiver messageBroadcastReceiver = new MessageBroadcastReceiver();
+private class MessageBroadcastReceiver extends BroadcastReceiver {
+  @Override
+  public void onReceive(Context context, Intent intent) {
+    Log.d("[Message]", intent.getStringExtra("message"));
+  }
+}
+
+public class PracticalTest01MainActivity extends Activity {
+ 
+  // ...
+ 
+  private IntentFilter intentFilter = new IntentFilter();
+ 
+  @Override
+  protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_practical_test01_main);
+ 
+    for (int index = 0; index < Constants.actionTypes.length; index++) {
+      intentFilter.addAction(Constants.actionTypes[index]);
+    }
+  }
+}
+
+public class PracticalTest01MainActivity extends Activity {
+ 
+  // ...
+ 
+  @Override
+  protected void onResume() {
+    super.onResume();
+    registerReceiver(messageBroadcastReceiver, intentFilter);
+  }
+ 
+  @Override
+  protected void onPause() {
+    unregisterReceiver(messageBroadcastReceiver);
+    super.onPause();
+  }
+}
